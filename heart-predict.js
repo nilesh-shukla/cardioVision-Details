@@ -6,7 +6,7 @@ const handleQuery = async (query) => {
 
     try {
         // Replace with your actual Gemini API endpoint and key
-        const API_KEY = 'AIzaSyDar5vdr3m9dAp_CEvvV2-WFMLwwGlaUkk';
+        const API_KEY = 'apikey';
         const response = await fetch(`https://your-gemini-endpoint?key=${API_KEY}`, {
             method: 'POST',
             headers: {
@@ -122,4 +122,5 @@ let resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(setupAnimations, 250);
+
 });
