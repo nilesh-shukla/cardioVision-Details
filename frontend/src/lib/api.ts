@@ -8,9 +8,16 @@ import type {
 import { FEATURE_NAMES } from '../types/api'
 
 const DEFAULT_API_BASE_URL = 'http://127.0.0.1:8000'
+const configuredApiBaseUrl = import.meta.env.VITE_API_BASE_URL?.trim()
+
+if (!configuredApiBaseUrl && import.meta.env.PROD) {
+  throw new Error(
+    'VITE_API_BASE_URL must be set when building the frontend for production.',
+  )
+}
 
 export const API_BASE_URL = (
-  import.meta.env.VITE_API_BASE_URL ?? DEFAULT_API_BASE_URL
+  configuredApiBaseUrl ?? DEFAULT_API_BASE_URL
 ).replace(/\/$/, '')
 
 export class ApiError extends Error {
@@ -180,13 +187,21 @@ export async function predict(
 
 export async function explain(
   features: FeaturePayload,
+  consentToExternalProcessing: boolean,
   signal?: AbortSignal,
 ): Promise<ExplanationResponse> {
+  if (!consentToExternalProcessing) {
+    throw new ApiError(
+      0,
+      'Consent is required before requesting an explanation.',
+    )
+  }
+
   const payload = await requestJson('/explain', {
     method: 'POST',
     body: JSON.stringify({
       ...toFeaturePayload(features),
-      consent_to_external_processing: true,
+      consent_to_external_processing: consentToExternalProcessing,
     }),
     signal,
   })

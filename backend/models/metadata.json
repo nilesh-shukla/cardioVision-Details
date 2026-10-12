@@ -1,0 +1,132 @@
+{
+  "artifact": "heart_disease_pipeline.joblib",
+  "selected_model": "random_forest",
+  "feature_order": [
+    "age",
+    "sex",
+    "cp",
+    "trestbps",
+    "chol",
+    "fbs",
+    "restecg",
+    "thalach",
+    "exang",
+    "oldpeak",
+    "slope",
+    "ca",
+    "thal"
+  ],
+  "target": "target",
+  "target_mapping": {
+    "0": "no disease",
+    "1": "disease"
+  },
+  "random_seed": 42,
+  "test_size": 0.2,
+  "dataset": {
+    "path": "D:\\Projects\\Mini_Project\\HeartDisease PredictionML\\heart.csv",
+    "sha256": "5104c0d1315ef260b09e339824d335b2f05b76e6c5aee6b76fdde3b294f5a21b",
+    "rows": 303,
+    "columns": 14,
+    "target_counts": {
+      "0": 138,
+      "1": 165
+    },
+    "train_rows": 242,
+    "test_rows": 61
+  },
+  "metrics": {
+    "logistic_regression": {
+      "accuracy": 0.8688524590163934,
+      "precision": 0.8571428571428571,
+      "recall": 0.9090909090909091,
+      "f1": 0.8823529411764706,
+      "roc_auc": 0.9101731601731602,
+      "confusion_matrix": [
+        [
+          23,
+          5
+        ],
+        [
+          3,
+          30
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.8846153846153846,
+          "recall": 0.8214285714285714,
+          "f1-score": 0.8518518518518519,
+          "support": 28.0
+        },
+        "1": {
+          "precision": 0.8571428571428571,
+          "recall": 0.9090909090909091,
+          "f1-score": 0.8823529411764706,
+          "support": 33.0
+        },
+        "accuracy": 0.8688524590163934,
+        "macro avg": {
+          "precision": 0.8708791208791209,
+          "recall": 0.8652597402597402,
+          "f1-score": 0.8671023965141612,
+          "support": 61.0
+        },
+        "weighted avg": {
+          "precision": 0.8697531976220501,
+          "recall": 0.8688524590163934,
+          "f1-score": 0.8683524411586129,
+          "support": 61.0
+        }
+      }
+    },
+    "random_forest": {
+      "accuracy": 0.8032786885245902,
+      "precision": 0.7560975609756098,
+      "recall": 0.9393939393939394,
+      "f1": 0.8378378378378378,
+      "roc_auc": 0.9231601731601733,
+      "confusion_matrix": [
+        [
+          18,
+          10
+        ],
+        [
+          2,
+          31
+        ]
+      ],
+      "classification_report": {
+        "0": {
+          "precision": 0.9,
+          "recall": 0.6428571428571429,
+          "f1-score": 0.75,
+          "support": 28.0
+        },
+        "1": {
+          "precision": 0.7560975609756098,
+          "recall": 0.9393939393939394,
+          "f1-score": 0.8378378378378378,
+          "support": 33.0
+        },
+        "accuracy": 0.8032786885245902,
+        "macro avg": {
+          "precision": 0.828048780487805,
+          "recall": 0.7911255411255411,
+          "f1-score": 0.7939189189189189,
+          "support": 61.0
+        },
+        "weighted avg": {
+          "precision": 0.8221511395441824,
+          "recall": 0.8032786885245902,
+          "f1-score": 0.7975188303057155,
+          "support": 61.0
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Educational prototype only; test metrics do not establish clinical effectiveness.",
+    "The dataset is small and may not represent the broader population."
+  ]
+}

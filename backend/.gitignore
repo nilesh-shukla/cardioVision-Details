@@ -8,4 +8,7 @@ __pycache__/
 .mypy_cache/
 *.pkl
 *.joblib
-models/
+models/*
+!models/
+!models/heart_disease_pipeline.joblib
+!models/metadata.json
