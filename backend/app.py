@@ -88,14 +88,14 @@ def predict(request: PredictionRequest) -> PredictionResponse:
             detail="Prediction model could not process the request.",
         ) from exc
 
-    return {
-        "prediction": prediction,
-        "label": metadata.get("target_mapping", {}).get(
+    return PredictionResponse(
+        prediction=prediction,
+        label=metadata.get("target_mapping", {}).get(
             str(prediction), f"class {prediction}"
         ),
-        "model": metadata.get("selected_model", "unknown"),
-        "disclaimer": DISCLAIMER,
-    }
+        model=metadata.get("selected_model", "unknown"),
+        disclaimer=DISCLAIMER,
+    )
 
 
 @app.post("/explain", response_model=ExplanationResponse)
@@ -136,10 +136,10 @@ def explain(request: ExplanationRequest) -> ExplanationResponse:
             detail="Explanation service is unavailable. Please try again later.",
         ) from exc
 
-    return {
-        "prediction": prediction,
-        "label": label,
-        "explanation": explanation,
-        "model": metadata.get("selected_model", "unknown"),
-        "disclaimer": DISCLAIMER,
-    }
+    return ExplanationResponse(
+        prediction=prediction,
+        label=label,
+        explanation=explanation,
+        model=metadata.get("selected_model", "unknown"),
+        disclaimer=DISCLAIMER,
+    )

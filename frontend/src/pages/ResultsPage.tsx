@@ -64,7 +64,7 @@ export function ResultsPage() {
     setExplanation(null)
 
     try {
-      const result = await explain(features)
+      const result = await explain(features, consent)
       setExplanation(result)
     } catch (error: unknown) {
       const message =

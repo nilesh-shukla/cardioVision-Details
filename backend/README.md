@@ -13,11 +13,10 @@ only produces a plain-language explanation of that local result.
 - `predictor.py` - loading and invoking the trusted generated pipeline
 - `train_model.py` - reproducible training and metadata generation
 - `llm_service.py` - optional Gemini explanation service
-- `models/` - locally generated model artifacts, ignored by Git
+- `models/` - tracked model artifacts required at runtime
 
 There is no database, authentication, Docker, microservice layer, or frontend
-integration in this stage. The API binds to localhost by default when started
-with the commands below.
+integration in this stage.
 
 ## Dataset and features
 
@@ -63,6 +62,21 @@ The service is available at `http://127.0.0.1:8000`.
 For a clean setup, use the local virtual environment's interpreter for every
 command. Do not install backend dependencies globally.
 
+## Deploy to Render
+
+Set the Render service root directory to `backend`, use the following build
+command, and configure the start command without `--reload`:
+
+```text
+pip install -r requirements.txt
+python -m uvicorn app:app --host 0.0.0.0 --port $PORT
+```
+
+The Render environment must provide `PORT`. Set `GEMINI_API_KEY` only if the
+optional `/explain` endpoint is enabled; `/health` and `/predict` do not
+require it. The tracked files in `models/` are loaded at runtime and must be
+included in the deployment checkout.
+
 ## Configure Gemini explanations
 
 Create a local `backend\.env` file from `.env.example` and replace only the
@@ -92,7 +106,8 @@ python train_model.py
 
 This validates the source CSV, compares Logistic Regression and Random Forest
 pipelines using a fixed stratified split, and writes the selected pipeline and
-metadata to `backend\models\`. Generated model artifacts are ignored by Git.
+metadata to `backend\models\`. Deployment uses the tracked artifacts already
+present in that directory; retraining is not part of the Render start command.
 
 The model is an educational prototype. Its test metrics do not establish
 clinical effectiveness, and the small dataset may not represent the broader
