@@ -57,7 +57,7 @@ With the virtual environment activated:
 python -m uvicorn app:app --reload
 ```
 
-The service is available at `http://127.0.0.1:8000`.
+The service is available at `http://127.0.0.1:8000`, `https://cardiovision-details.onrender.com/`.
 
 For a clean setup, use the local virtual environment's interpreter for every
 command. Do not install backend dependencies globally.
