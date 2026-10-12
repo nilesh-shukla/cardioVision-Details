@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI
 from fastapi import HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 
 from predictor import FEATURE_NAMES, load_metadata, load_model, predict_features
 from llm_service import GeminiServiceError, generate_explanation
@@ -25,6 +26,16 @@ app = FastAPI(
     title="CardioVision AI Backend",
     description="Initial backend service for CardioVision AI.",
     version="0.2.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
 )
 
 
