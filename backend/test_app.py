@@ -40,6 +40,33 @@ def test_health_when_artifact_present() -> None:
     assert response.json()["model_ready"] is True
 
 
+def test_production_origin_is_allowed_for_health() -> None:
+    response = client.get(
+        "/health",
+        headers={"Origin": "https://cardio-vision-details.vercel.app"},
+    )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == (
+        "https://cardio-vision-details.vercel.app"
+    )
+
+
+def test_production_origin_preflight_is_allowed() -> None:
+    response = client.options(
+        "/predict",
+        headers={
+            "Origin": "https://cardio-vision-details.vercel.app",
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "content-type",
+        },
+    )
+    assert response.status_code == 200
+    assert response.headers["access-control-allow-origin"] == (
+        "https://cardio-vision-details.vercel.app"
+    )
+    assert response.headers["access-control-allow-methods"]
+
+
 def test_predict_valid_request() -> None:
     response = client.post("/predict", json=VALID_PAYLOAD)
     assert response.status_code == 200
